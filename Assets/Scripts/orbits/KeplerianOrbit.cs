@@ -9,6 +9,12 @@ public class KeplerianOrbit
     //..
 
     /// <summary>
+    /// The "name" of this orbit, i.e. whose orbit this actually is
+    /// </summary>
+    /// <returns></returns>
+    public string name = default(string);
+
+    /// <summary>
     /// The semi-major axis. Half of the major axis (longest axis).
     /// </summary>
     /// <returns></returns>

@@ -110,7 +110,7 @@ public abstract class CSVDataReader : MonoBehaviour
             //We've read this batch of lines. Wait a frame.
             lineCount = 0;
 
-            Debug.Log($">> Halted reading, waiting for a frame ({++frameCount} total)");
+            // Debug.Log($">> Halted reading, waiting for a frame ({++frameCount} total)");
 
             //End of frame!
             yield return new WaitForEndOfFrame();
@@ -183,7 +183,7 @@ public abstract class CSVDataReader : MonoBehaviour
     /// <returns></returns>
     public virtual void Close()
     {
-        Debug.Log("Closing");
+        // Debug.Log("Closing");
         
         //Close it
         reader.Close();
