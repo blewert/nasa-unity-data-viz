@@ -67,4 +67,15 @@ public class PlanetVisualiser : MonoBehaviour
         //And return!
         return new OrbitalMass(in obj, in orbit);
     }
+
+    public void Update()
+    {
+        //No planets? do nothing
+        if(planets.Count == 0)
+            return;
+
+        //Otherwise, orbit!
+        foreach(var planet in planets)
+            planet.Update();
+    }
 }
