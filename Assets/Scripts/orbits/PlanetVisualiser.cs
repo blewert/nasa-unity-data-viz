@@ -16,7 +16,7 @@ public class PlanetVisualiser : MonoBehaviour
     /// <typeparam name="GameObject"></typeparam>
     /// <returns></returns>
     [HideInInspector]
-    public List<GameObject> planets = new List<GameObject>();
+    public List<OrbitalMass> planets = new List<OrbitalMass>();
 
     /// <summary>
     /// Called when the orbit data has been read from KeplerianOrbitReader.cs.
@@ -53,7 +53,7 @@ public class PlanetVisualiser : MonoBehaviour
     /// Creates a planet from a given orbit
     /// </summary>
     /// <param name="orbit"></param>
-    public GameObject CreatePlanet(in KeplerianOrbit orbit)
+    public OrbitalMass CreatePlanet(in KeplerianOrbit orbit)
     {
         //For now just create a sphere and return it
         var obj = GameObject.CreatePrimitive(PrimitiveType.Sphere);
@@ -65,6 +65,6 @@ public class PlanetVisualiser : MonoBehaviour
         obj.transform.SetParent(planetParentObj.transform);
 
         //And return!
-        return obj;
+        return new OrbitalMass(in obj, in orbit);
     }
 }
