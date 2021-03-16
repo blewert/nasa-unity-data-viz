@@ -19,6 +19,12 @@ public class PlanetVisualiser : MonoBehaviour
     public List<OrbitalMass> planets = new List<OrbitalMass>();
 
     /// <summary>
+    /// The options for line renderers for path orbit viz
+    /// </summary>
+    [SerializeField]
+    protected Polyline.LineRendererData orbitLineOptions;
+
+    /// <summary>
     /// Called when the orbit data has been read from KeplerianOrbitReader.cs.
     /// </summary>
     public void OnOrbitsDataRead()
@@ -38,7 +44,7 @@ public class PlanetVisualiser : MonoBehaviour
         foreach(var planet in planets)
         {
             //Last position
-            var lastPos = default(Vector3);
+            var positions = new List<Vector3>();
 
             //For each planet
             for(float a = 0f; a < 360f; a += 1f)
@@ -46,13 +52,16 @@ public class PlanetVisualiser : MonoBehaviour
                 //Compute mean anomaly pos
                 var pos = planet.ComputeOrbitPositionRaw(a);
 
-                //Now render the line
-                if(lastPos != default(Vector3))
-                    Debug.DrawLine(lastPos, pos, Color.yellow, 10f);
-
-                //Set last position to current position
-                lastPos = pos;
+                //Add to positions
+                positions.Add(pos);
             }
+
+            //Get planet obj.
+            var obj = planet.gameObject;
+
+            //Attach polyline
+            var line = new Polyline(positions);
+            line.AttachToObject(obj, in orbitLineOptions);
         }
     }
 
