@@ -137,9 +137,19 @@ public class OrbitalMass
 
     public float speed = 50;
 
+    public Vector3 ComputeOrbitPositionRaw(float deg)
+    {
+        var position = GetPosition(deg * Mathf.Deg2Rad);
+        return transform.parent.TransformPoint(position);
+    }
+
+    public Vector3 ComputeOrbitPosition(float deg)
+    {
+        return ComputeOrbitPositionRaw(Time.time * deg);        
+    }
+
     public void Update()
     {
-        var position = GetPosition(Time.time * speed * Mathf.Deg2Rad);
-        transform.position = transform.parent.TransformPoint(position);
+        transform.position = this.ComputeOrbitPosition(speed);
     }
 }

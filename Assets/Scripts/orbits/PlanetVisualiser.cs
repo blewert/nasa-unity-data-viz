@@ -28,6 +28,32 @@ public class PlanetVisualiser : MonoBehaviour
         
         //Create planets from these orbits
         this.CreatePlanetsFromOrbits(in orbits);
+
+        //Create orbit paths
+        this.CreateOrbitPathVisualisation();
+    }
+
+    public void CreateOrbitPathVisualisation()
+    {
+        foreach(var planet in planets)
+        {
+            //Last position
+            var lastPos = default(Vector3);
+
+            //For each planet
+            for(float a = 0f; a < 360f; a += 1f)
+            {
+                //Compute mean anomaly pos
+                var pos = planet.ComputeOrbitPositionRaw(a);
+
+                //Now render the line
+                if(lastPos != default(Vector3))
+                    Debug.DrawLine(lastPos, pos, Color.yellow, 10f);
+
+                //Set last position to current position
+                lastPos = pos;
+            }
+        }
     }
 
     /// <summary>
