@@ -8,7 +8,8 @@ public class PlanetVisualiser : MonoBehaviour
     /// Where are all the planets created under in the hierarchy? well, here.
     /// </summary>
     /// <returns></returns>
-    protected GameObject planetParentObj = default(GameObject);
+    [HideInInspector]
+    public GameObject planetParentObj = default(GameObject);
 
     /// <summary>
     /// Where are all the planet objects? well, here.
