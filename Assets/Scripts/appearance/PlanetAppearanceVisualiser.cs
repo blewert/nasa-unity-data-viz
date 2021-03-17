@@ -54,6 +54,11 @@ public class PlanetAppearanceVisualiser : MonoBehaviour
     private bool appearancesRead = false;
 
     /// <summary>
+    /// The material for the planet
+    /// </summary>
+    public Material planetMaterial;
+
+    /// <summary>
     /// Called when the appearances csv has been read.
     /// </summary>
     public void OnAppearancesRead()
@@ -92,6 +97,9 @@ public class PlanetAppearanceVisualiser : MonoBehaviour
     /// <param name="appearance"></param>
     protected void ApplyPlanetAppearance(GameObject gameObject, PlanetAppearance appearance)
     {
+        // DIAMETER
+        //
+
         //We need to set the diameter first. Find the max diameter for all the planets.
         //NOTE: this is bad practice because we're computing the max for each planet. it only 
         //      ideally needs to be done once.
@@ -106,5 +114,22 @@ public class PlanetAppearanceVisualiser : MonoBehaviour
 
         //Set the diameter of this object.
         gameObject.transform.localScale = Vector3.one * (normalisedDiameter * options.diameterScale);
+
+
+
+        // TEXTURE
+        //
+
+        //Load the texture
+        var tex = Resources.Load<Texture2D>(appearance.texturePath);
+
+        Debug.Log(tex);
+        Debug.Log(appearance.texturePath);
+
+        //Apply the material.
+        gameObject.GetComponent<Renderer>().material = planetMaterial;
+        
+        //Set the albedo texture
+        gameObject.GetComponent<Renderer>().material.SetTexture("_BaseMap", tex);
     }
 }

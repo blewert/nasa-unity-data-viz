@@ -7,7 +7,7 @@ public class PlanetAppearanceReader : CSVDataReader
     /// <summary>
     /// The number of columns in the CSV.
     /// </summary>
-    public const uint PLANET_APPEARANCE_NUMBER_OF_COLUMNS = 2;
+    public const uint PLANET_APPEARANCE_NUMBER_OF_COLUMNS = 3;
 
     /// <summary>
     /// Function to call when finished reading
@@ -34,10 +34,12 @@ public class PlanetAppearanceReader : CSVDataReader
         //Otherwise, parse!
         string name = splitLine[0].Trim();
         float diameter = float.Parse(splitLine[1]);
+        string texturePath = splitLine[2].Trim();
 
         //Make a new planetappearance object
         var appearance = new PlanetAppearance(name);
         appearance.diameter = diameter;
+        appearance.texturePath = texturePath;
 
         //Add to list
         planetAppearances.Add(appearance);

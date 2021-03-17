@@ -131,8 +131,9 @@ public class OrbitalMass
     protected void Initialise()
     {
         //Set-up according to initial orbital elements
-        transform.Rotate(Vector3.forward * (90 - orbitalElements.inclination));
+        transform.Rotate(Vector3.forward * (orbitalElements.inclination));
         transform.Rotate(Vector3.up * orbitalElements.ascendingLongitude);
+
     }
 
     public float speed = 50;

@@ -444,6 +444,7 @@ MonoBehaviour:
     applyMinMaxScale: 0
     minScale: 0.1
     maxScale: 1.5
+  planetMaterial: {fileID: 2100000, guid: 2399fdaf8f330844c8018fbea34ee745, type: 2}
 --- !u!114 &598289997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -557,8 +558,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   planetParentObj: {fileID: 1213139458}
   orbitLineOptions:
-    startWidth: 0.15
-    endWidth: 0.15
+    startWidth: 0.05
+    endWidth: 0.05
     loop: 1
     material: {fileID: 2100000, guid: 6fc2907c2f5183f47849019fedb1c660, type: 2}
   onPlanetsCreated:

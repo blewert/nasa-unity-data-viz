@@ -15,6 +15,11 @@ public class PlanetAppearance
     public string name;
 
     /// <summary>
+    /// The path to the texture.
+    /// </summary>
+    public string texturePath;
+
+    /// <summary>
     /// Constructs a new PlanetAppearance object
     /// </summary>
     /// <param name="name"></param>
