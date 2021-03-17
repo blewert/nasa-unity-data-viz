@@ -8,7 +8,6 @@ public class PlanetVisualiser : MonoBehaviour
     /// Where are all the planets created under in the hierarchy? well, here.
     /// </summary>
     /// <returns></returns>
-    [HideInInspector]
     public GameObject planetParentObj = default(GameObject);
 
     /// <summary>
@@ -26,6 +25,16 @@ public class PlanetVisualiser : MonoBehaviour
     protected Polyline.LineRendererData orbitLineOptions;
 
     /// <summary>
+    /// Callback for when planets are created
+    /// </summary>
+    public UnityEngine.Events.UnityEvent onPlanetsCreated;
+
+    /// <summary>
+    /// The scale of the orbits to apply globally
+    /// </summary>
+    public float orbitScale = 1.0f;
+
+    /// <summary>
     /// Called when the orbit data has been read from KeplerianOrbitReader.cs.
     /// </summary>
     public void OnOrbitsDataRead()
@@ -38,6 +47,10 @@ public class PlanetVisualiser : MonoBehaviour
 
         //Create orbit paths
         this.CreateOrbitPathVisualisation();
+
+        //Call the callback
+        if(onPlanetsCreated != null)
+            onPlanetsCreated.Invoke();
     }
 
     public void CreateOrbitPathVisualisation()
@@ -51,7 +64,7 @@ public class PlanetVisualiser : MonoBehaviour
             for(float a = 0f; a < 360f; a += 1f)
             {
                 //Compute mean anomaly pos
-                var pos = planet.ComputeOrbitPositionRaw(a);
+                var pos = planet.ComputeOrbitPositionRaw(a, orbitScale);
 
                 //Add to positions
                 positions.Add(pos);
@@ -73,7 +86,7 @@ public class PlanetVisualiser : MonoBehaviour
     public void CreatePlanetsFromOrbits(in List<KeplerianOrbit> orbits)
     {
         //Create a new parent object
-        planetParentObj = new GameObject("planets");
+        // planetParentObj = new GameObject("planets");
 
         foreach(var orbit in orbits)
         {
@@ -112,6 +125,6 @@ public class PlanetVisualiser : MonoBehaviour
 
         //Otherwise, orbit!
         foreach(var planet in planets)
-            planet.Update();
+            planet.Update(orbitScale);
     }
 }

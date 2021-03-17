@@ -106,7 +106,7 @@ public class OrbitalMass
     /// </summary>
     /// <returns>The point position.</returns>
     /// <param name="M">Mean anomaly.</param>
-    public Vector3 GetPosition(float M)
+    public Vector3 GetPosition(float M, float scale = 1f)
     {
         float e = orbitalElements.e;
         float a = orbitalElements.a; // semiMajorAxis
@@ -119,9 +119,9 @@ public class OrbitalMass
         float focusRadius = a * (1 - Mathf.Pow(e, 2f)) / (1 + e * Mathf.Cos(TA));
 
         // parametric equation of an elipse using the orbital elements
-        float X = focusRadius * (Mathf.Cos(N) * Mathf.Cos(TA + w) - Mathf.Sin(N) * Mathf.Sin(TA + w)) * Mathf.Cos(i);
-        float Y = focusRadius * Mathf.Sin(TA + w) * Mathf.Sin(i);
-        float Z = focusRadius * (Mathf.Sin(N) * Mathf.Cos(TA + w) + Mathf.Cos(N) * Mathf.Sin(TA + w)) * Mathf.Cos(i);
+        float X = scale * focusRadius * (Mathf.Cos(N) * Mathf.Cos(TA + w) - Mathf.Sin(N) * Mathf.Sin(TA + w)) * Mathf.Cos(i);
+        float Y = scale * focusRadius * Mathf.Sin(TA + w) * Mathf.Sin(i);
+        float Z = scale * focusRadius * (Mathf.Sin(N) * Mathf.Cos(TA + w) + Mathf.Cos(N) * Mathf.Sin(TA + w)) * Mathf.Cos(i);
 
         Vector3 orbitPoint = new Vector3(X, Y, Z);
 
@@ -137,19 +137,19 @@ public class OrbitalMass
 
     public float speed = 50;
 
-    public Vector3 ComputeOrbitPositionRaw(float deg)
+    public Vector3 ComputeOrbitPositionRaw(float deg, float scale = 1f)
     {
-        var position = GetPosition(deg * Mathf.Deg2Rad);
+        var position = GetPosition(deg * Mathf.Deg2Rad, scale);
         return transform.parent.TransformPoint(position);
     }
 
-    public Vector3 ComputeOrbitPosition(float deg)
+    public Vector3 ComputeOrbitPosition(float globalScale, float deg)
     {
-        return ComputeOrbitPositionRaw(Time.time * deg);        
+        return ComputeOrbitPositionRaw(Time.time * deg, globalScale);        
     }
 
-    public void Update()
+    public void Update(float globalScale)
     {
-        transform.position = this.ComputeOrbitPosition(speed);
+        transform.position = this.ComputeOrbitPosition(globalScale, speed);
     }
 }
